@@ -1,3 +1,1 @@
-const { liff } = window;
-
-export default liff;
+export default window.liff;
