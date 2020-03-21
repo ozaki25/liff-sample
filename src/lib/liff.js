@@ -1,1 +1,1 @@
-export default window.liff;
+export const liff = window.liff;
