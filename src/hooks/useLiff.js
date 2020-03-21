@@ -3,7 +3,8 @@ import { liff } from '../lib/liff';
 
 function useLiff({ liffId }) {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(false);
+  const [error, setError] = useState(null);
+  const [profile, setProfile] = useState(null);
 
   const initLiff = async ({ liffId }) => {
     setLoading(true);
@@ -12,14 +13,25 @@ function useLiff({ liffId }) {
       console.log('success liff init');
       if (liff.isLoggedIn()) {
         console.log('logged in!');
-        setResult(true);
       } else {
         console.log('not logged in');
         liff.login();
       }
     } catch (error) {
       console.log({ error });
-      setResult(false);
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchProfile = async () => {
+    setLoading(true);
+    try {
+      setProfile(await liff.getProfile());
+    } catch (error) {
+      console.log({ error });
+      setError(error);
     } finally {
       setLoading(false);
     }
@@ -29,7 +41,12 @@ function useLiff({ liffId }) {
     initLiff({ liffId });
   }, [liffId]);
 
-  return { loading, result };
+  return {
+    loading,
+    error,
+    fetchProfile,
+    profile,
+  };
 }
 
 export default useLiff;
