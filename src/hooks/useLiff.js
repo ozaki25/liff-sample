@@ -37,6 +37,19 @@ function useLiff({ liffId }) {
     }
   };
 
+  const sendMessage = async ({ text }) => {
+    setLoading(true);
+    try {
+      liff.sendMessages([{ type: 'text', text }]);
+      console.log(`success send message: ${text}`);
+    } catch (error) {
+      console.log({ error });
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     initLiff({ liffId });
   }, [liffId]);
@@ -46,6 +59,7 @@ function useLiff({ liffId }) {
     error,
     fetchProfile,
     profile,
+    sendMessage,
   };
 }
 
