@@ -40,7 +40,9 @@ function useLiff({ liffId }) {
   const sendMessage = async ({ text }) => {
     setLoading(true);
     try {
-      liff.shareTargetPicker([{ type: 'text', text }]);
+      liff.isInClient()
+        ? liff.sendMessages([{ type: 'text', text }])
+        : liff.shareTargetPicker([{ type: 'text', text }]);
       console.log(`success send message: ${text}`);
     } catch (error) {
       console.log({ error });
