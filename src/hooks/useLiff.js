@@ -51,7 +51,7 @@ function useLiff({ liffId }) {
   };
 
   useEffect(() => {
-    initLiff({ liffId });
+    if (liffId) initLiff({ liffId });
   }, [liffId]);
 
   return {
