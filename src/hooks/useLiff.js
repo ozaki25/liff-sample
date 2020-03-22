@@ -11,6 +11,12 @@ function useLiff({ liffId }) {
     try {
       await liff.init({ liffId });
       console.log('success liff init');
+      if (liff.isLoggedIn()) {
+        console.log('logged in!');
+      } else {
+        console.log('not logged in');
+        liff.login();
+      }
     } catch (error) {
       console.log({ error });
       setError(error);
@@ -34,7 +40,7 @@ function useLiff({ liffId }) {
   const sendMessage = async ({ text }) => {
     setLoading(true);
     try {
-      liff.sendMessages([{ type: 'text', text }]);
+      liff.shareTargetPicker([{ type: 'text', text }]);
       console.log(`success send message: ${text}`);
     } catch (error) {
       console.log({ error });
